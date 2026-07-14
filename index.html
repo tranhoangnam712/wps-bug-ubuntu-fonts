@@ -1,0 +1,1689 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Roboto;
+	panose-1:2 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:sans-serif;}
+@font-face
+	{font-family:"\@SimSun";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+h3
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:13.5pt;
+	font-family:SimSun;
+	font-weight:bold;}
+h4
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:SimSun;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+p
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+code
+	{font-family:"Courier New";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:SimSun;}
+.MsoChpDefault
+	{font-size:10.0pt;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US link=blue vlink="#954F72" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>Link download file:</span>  <a
+href="https://github.com/tranhoangnam712/wps-bug-ubuntu-fonts/blob/main/fix-wps.sh"><span
+style='font-size:12.0pt;font-family:Roboto'>https://github.com/tranhoangnam712/wps-bug-ubuntu-fonts/blob/main/fix-wps.sh</span></a></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:16.0pt;
+font-family:Roboto;border:solid windowtext 1.0pt;padding:0in'>SOURCE CODE </span></p>
+
+</div>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>#!/bin/bash</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>RED='\e[31m'</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>GREEN='\e[32m'</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>YELLOW='\e[33m'</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>RESET='\e[0m'</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>fake_metadata(){</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                local name=&quot;$1&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                shift</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                echo -n &quot;Forging ${name}...&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                while [[ &quot;$#&quot; -gt 0 ]]; do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                sudo sed -i &quot;$1&quot;
+&quot;${name}.ttx&quot; &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                shift</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;${name}.ttf&quot;
+&quot;${name}.ttx&quot; &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                echo -e &quot; | ${GREEN}Success${RESET}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>}</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler(){</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    local RETRY_ATTEMP=3</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    local MSG=&quot;$1&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    local CMD=&quot;$2&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    local ERR_MSG=&quot;$3&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    local SHOW_OUTPUT=&quot;$4&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    local EXEC_CMD=&quot;$CMD&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    if [[ -z &quot;${SHOW_OUTPUT}&quot; ]]; then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        EXEC_CMD=&quot;$CMD &gt;/dev/null 2&gt;&amp;1&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        echo -n &quot;${MSG}...&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    else</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        echo &quot;${MSG}...&quot; # Prints normally with a newline so
+apt gets its own space</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    while ! eval &quot;$EXEC_CMD&quot;; do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        ((RETRY_ATTEMP--))</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        echo -e &quot;\n--- $CMD |
+${RED}Failed${RESET}\nRetrying...&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        if [[ &quot;$RETRY_ATTEMP&quot; -lt 1 ]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>            echo -e &quot;${RED}${ERR_MSG}, exit in 3 seconds${RESET}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>            sleep 3</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>            exit 1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>        sleep 3</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    echo -e &quot; | ${GREEN}Success${RESET}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>    return 0</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>}</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo killall -9 wps &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo killall -9 wpp &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo killall -9 et &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo killall -9 wpspdf &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>CURRENT_PATH=$(pwd)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Running apt update&quot; &quot;sudo apt update&quot;
+&quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Downloading package&quot; &quot;sudo apt install curl
+wget git meson ninja-build build-essential fcitx5 fcitx5-unikey fcitx5-frontend-qt5
+fcitx5-frontend-gtk3 jq -y&quot; &quot;Pls recheck your network
+connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Downloading freetype2.13.0 source code&quot; &quot;sudo
+wget -q -O freetype-2.13.0.tar.xz
+https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz&quot;
+&quot;Cant access to
+https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz
+.Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo tar xf freetype-2.13.0.tar.xz --remove-files &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Extracting latest verion number...&quot; &quot;sudo curl
+-Ls https://params.wps.com/api/map/web/newwpsapk?pttoken=newlinuxpackages&quot;
+&quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>URL_DOWNLOAD=$(sudo curl -Ls
+https://params.wps.com/api/map/web/newwpsapk?pttoken=newlinuxpackages | jq -r
+&quot;.staticjs.website.wpsnewpackages.downloads&quot; | base64 -d | jq -r
+&quot;.linux_deb&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>LATEST_VERSION=&quot;$(echo ${URL_DOWNLOAD}| grep -oE
+&quot;[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+&quot;)&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>echo &quot;Latest Version:${LATEST_VERSION}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>OPTION=0</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>if dpkg -s &quot;wps-office&quot; &gt;/dev/null 2&gt;&amp;1 ;then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                read -p &quot;WPS already installed, do you want to
+reinstall(y/n):&quot; REINSTALL</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                if [[ &quot;$REINSTALL&quot; == &quot;y&quot; ]]; then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                handler &quot;Deleting WPS&quot;
+&quot;sudo apt purge wps-office -y &gt;/dev/null 2&gt;&amp;1 &amp;&amp; sudo
+apt autoremove -y &gt;/dev/null 2&gt;&amp;1&quot; &quot;Cant remove
+wps-office&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                handler &quot;Clearing all WPS cache
+and user data&quot; &quot;sudo rm -rf ~/.cache/Kingsoft ~/.config/Kingsoft
+~/.local/share/Kingsoft /tmp/Kingsoft* /opt/kingsoft/wps-office&quot;
+&quot;Failed to clear WPS data&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                else</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                OPTION=-1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>if [[ &quot;${OPTION}&quot; -eq 0 ]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                echo &quot;Finding local wps deb...&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                PATH_DEB=$(find ./ ~/Downloads ~/Desktop -maxdepth 1
+-name &quot;wps-office*.deb&quot; 2&gt;/dev/null)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                readarray -t ITEMS &lt;&lt;&lt;&quot;$PATH_DEB&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                NEW=()</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                for item in &quot;${ITEMS[@]}&quot;; do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                if [[ &quot;$(dpkg-deb -f
+&quot;$item&quot; Package 2&gt; /dev/null)&quot; == &quot;wps-office&quot; ]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                NEW+=(&quot;${item}&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                NEW_VERSION=()</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                count=0</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                if [[ &quot;${#NEW[@]}&quot; -ge 1 ]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                echo &quot;Found ${#NEW[@]} wps deb
+file&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                for item in &quot;${NEW[@]}&quot;; do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                ((count++))</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                CURRENT_VERSION=$(dpkg-deb
+-f &quot;$item&quot; Version 2&gt; /dev/null | grep -oE &quot;[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                NEW_VERSION+=(&quot;${CURRENT_VERSION}&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                echo
+&quot;${count}===${CURRENT_VERSION} ${item}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                ((count++))</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                if [[ &quot;${#NEW[@]}&quot; -eq 1
+&amp;&amp; &quot;${CURRENT_VERSION[0]}&quot; == &quot;$LATEST_VERSION&quot;
+]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                OPTION=1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                else</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                echo &quot;${count}===Download
+lastest version from internet&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                                read -p &quot;Do you
+want to install by one of those local or install with latest version in
+internet(1-${count}):&quot; OPTION</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                else</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                OPTION=1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                count=1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                while [[ &quot;${OPTION}&quot; -lt 1 || &quot;${OPTION}&quot;
+-gt &quot;${count}&quot; ]];do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                read -p &quot;Invalid option,pls
+retry:&quot; OPTION</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                if [[ &quot;${OPTION}&quot; -eq &quot;${count}&quot;
+]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                handler &quot;Downloading latest WPS
+from internet&quot; &quot;wget -q -O wps-${LATEST_VERSION}.deb
+${URL_DOWNLOAD}&quot; &quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                DEB_FILE=&quot;./wps-${LATEST_VERSION}.deb&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                else</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                                DEB_FILE=&quot;${NEW[--OPTION]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Installing WPS-${LATEST_VERSION}&quot;
+&quot;sudo apt install ${DEB_FILE} -y&quot; &quot;Failed to install WPS&quot;
+&quot;show&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>echo &quot;Fixing WPS bug&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>cd freetype-2.13.0 &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Compiling old version freetype&quot; &quot;meson setup
+build &gt;/dev/null 2&gt;&amp;1 &amp;&amp; meson compile -C build &gt;/dev/null
+2&gt;&amp;1&quot; &quot;Failed to compile freetype&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Applying freetype to WPS&quot; &quot;sudo cp -a
+build/libfreetype.so* /opt/kingsoft/wps-office/office6/&quot; &quot;Applying
+failed&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>cd &quot;${CURRENT_PATH}&quot; &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo rm -rf ./freetype-2.13.0 &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>echo &quot;Installing missing fonts&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Install Roboto fonts&quot; &quot;sudo apt install
+fonts-roboto -y&quot; &quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Install Open Sans&quot; &quot;sudo apt install
+fonts-open-sans -y&quot; &quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Install Dejavu And Liberation2&quot; &quot;sudo apt
+install fonts-dejavu fonts-liberation2 -y&quot; &quot;Pls recheck your network
+connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>echo -e &quot;Personal:will applying fonts from microsoft and it
+violate copyright&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>echo -e &quot;Bussiness:will applying open source fonts.But cambria
+math fonts wont work&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>read -p &quot;Personal use(1) or Bussiness use(2):&quot; OPTION</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>while [[ &quot;$OPTION&quot; != 1 &amp;&amp; &quot;$OPTION&quot; != 2 ]];do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                read -p &quot;Invalid option,retry:&quot; OPTION</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo rm -rf /usr/share/fonts/truetype/microsoft &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>sudo rm -rf /usr/share/fonts/truetype/open-source &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>if [[ &quot;$OPTION&quot; -eq 1 ]]; then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./wps-fonts &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./Windows-10-Fonts-Default &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Downloading microsoft fonts&quot;
+&quot;sudo git clone https://github.com/udoyen/wps-fonts.git &gt;/dev/null
+2&gt;&amp;1 &amp;&amp; sudo git clone
+https://github.com/taveevut/Windows-10-Fonts-Default.git &gt;/dev/null
+2&gt;&amp;1&quot; &quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -f ./wps-fonts/wps/WEBDINGS.TTF &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo mv ./wps-fonts/wps/WINGDNG3.ttf
+./wps-fonts/wps/wingding3.ttf &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo mv ./wps-fonts/wps/WINGDNG2.ttf
+./wps-fonts/wps/wingding2.ttf &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Creating folder&quot; &quot;sudo mkdir -p
+/usr/share/fonts/truetype/microsoft&quot; &quot;Failed to create folder&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Applying fonts&quot; &quot;sudo mv
+./wps-fonts/wps/* /usr/share/fonts/truetype/microsoft/ &amp;&amp; sudo mv
+./Windows-10-Fonts-Default/calibri.ttf /usr/share/fonts/truetype/microsoft/
+&amp;&amp; sudo mv ./Windows-10-Fonts-Default/calibrib.ttf
+/usr/share/fonts/truetype/microsoft/ &amp;&amp; sudo mv
+./Windows-10-Fonts-Default/calibrii.ttf /usr/share/fonts/truetype/microsoft/
+&amp;&amp; sudo mv ./Windows-10-Fonts-Default/calibriz.ttf
+/usr/share/fonts/truetype/microsoft/ &amp;&amp; sudo mv
+./Windows-10-Fonts-Default/calibril.ttf /usr/share/fonts/truetype/microsoft/
+&amp;&amp; sudo mv ./Windows-10-Fonts-Default/calibrili.ttf
+/usr/share/fonts/truetype/microsoft/ &amp;&amp; sudo mv ./Windows-10-Fonts-Default/cambria.ttc
+/usr/share/fonts/truetype/microsoft/ &amp;&amp; sudo mv
+./Windows-10-Fonts-Default/cambriab.ttf /usr/share/fonts/truetype/microsoft/
+&amp;&amp; sudo mv ./Windows-10-Fonts-Default/cambriai.ttf
+/usr/share/fonts/truetype/microsoft/ &amp;&amp; sudo mv ./Windows-10-Fonts-Default/cambriaz.ttf
+/usr/share/fonts/truetype/microsoft/&quot; &quot;Fonts apply failed&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./wps-fonts &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./Windows-10-Fonts-Default &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>else</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Creating folder&quot; &quot;sudo mkdir -p
+/usr/share/fonts/truetype/open-source&quot; &quot;Failed to create folder&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Installing fonttools&quot; &quot;sudo apt
+install fonttools -y&quot; &quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Downloading Deepin&quot; &quot;sudo wget
+-q -O ttf-deepin-opensymbol_2.2_all.deb
+https://tux.rainside.sk/deepin/apricot/pool/non-free/t/ttf-deepin-opensymbol/ttf-deepin-opensymbol_2.2_all.deb&quot;
+&quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Downloading Carlito(Replacement for
+Calibri)&quot; &quot;sudo apt install fonts-crosextra-carlito -y&quot;
+&quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Downloading Caladea(Replacement for
+Cambria)&quot; &quot;sudo apt install fonts-crosextra-caladea -y&quot;
+&quot;Pls recheck your network connection&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo dpkg-deb -x ttf-deepin-opensymbol_2.2_all.deb
+extracted_fonts &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -f ./ttf-deepin-opensymbol_2.2_all.deb
+&gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                cd extracted_fonts/usr/share/fonts/truetype/deepin/
+&gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                echo &quot;Decompiling to XML...&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;wingding.ttx&quot;
+DeepinOpenSymbol.ttf &gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;wingding2.ttx&quot; DeepinOpenSymbol2.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;wingding3.ttx&quot;
+DeepinOpenSymbol3.ttf &gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;mtextra.ttx&quot;
+DeepinOpenSymbol5.ttf &gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;symbol.ttx&quot;
+DeepinOpenSymbol6.ttf &gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./*.ttf &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                cd /usr/share/fonts/truetype/crosextra/ &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;calibri.ttx&quot; Carlito-Regular.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;calibrib.ttx&quot; Carlito-Bold.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;calibrii.ttx&quot; Carlito-Italic.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;calibriz.ttx&quot;
+Carlito-BoldItalic.ttf &gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;cambria.ttx&quot; Caladea-Regular.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;cambriab.ttx&quot; Caladea-Bold.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;cambriai.ttx&quot; Caladea-Italic.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo ttx -o &quot;cambriaz.ttx&quot;
+Caladea-BoldItalic.ttf &gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./*.ttf &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                echo &quot;Forging metadata to trick WPS&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                cd
+&quot;${CURRENT_PATH}/extracted_fonts/usr/share/fonts/truetype/deepin/&quot;
+&gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Deepin OpenSymbol
+Regular/Wingdings/g&quot; &quot;s/DeepinOpenSymbolRegular/Wingdings/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;wingding&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Deepin OpenSymbol 2/Wingdings 2/g&quot;
+&quot;s/DeepinOpenSymbol2Regular/Wingdings2/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;wingding2&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Deepin OpenSymbol 3/Wingdings 3/g&quot;
+&quot;s/DeepinOpenSymbol3Regular/Wingdings3/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;wingding3&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Deepin OpenSymbol 5 Regular/MT
+Extra/g&quot; &quot;s/DeepinOpenSymbolRegular5/MTExtra/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;mtextra&quot; &quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Deepin OpenSymbol 6
+Regular/Symbol/g&quot; &quot;s/DeepinOpenSymbolRegular6/Symbol/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;symbol&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                cd /usr/share/fonts/truetype/crosextra/ &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Carlito Regular/Calibri/g&quot;
+&quot;s/Carlito-Regular/Calibri/g&quot; &quot;s/Carlito/Calibri/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;calibri&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Carlito Bold/Calibri Bold/g&quot;
+&quot;s/Carlito-Bold/Calibri-Bold/g&quot; &quot;s/Carlito/Calibri/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;calibrib&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Carlito Italic/Calibri Italic/g&quot;
+&quot;s/Carlito-Italic/Calibri-Italic/g&quot; &quot;s/Carlito/Calibri/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;calibrii&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Carlito Bold Italic/Calibri Bold
+Italic/g&quot; &quot;s/Carlito-BoldItalic/Calibri-BoldItalic/g&quot;
+&quot;s/Carlito/Calibri/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;calibriz&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Caladea Regular/Cambria/g&quot;
+&quot;s/Caladea-Regular/Cambria/g&quot; &quot;s/Caladea/Cambria/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;cambria&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Caladea Bold/Cambria Bold/g&quot;
+&quot;s/Caladea-Bold/Cambria-Bold/g&quot; &quot;s/Caladea/Cambria/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;cambriab&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Caladea Italic/Cambria Italic/g&quot;
+&quot;s/Caladea-Italic/Cambria-Italic/g&quot; &quot;s/Caladea/Cambria/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;cambriai&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                rules=(&quot;s/Caladea Bold Italic/Cambria Bold
+Italic/g&quot; &quot;s/Caladea-BoldItalic/Cambria-BoldItalic/g&quot;
+&quot;s/Caladea/Cambria/g&quot;)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                fake_metadata &quot;cambriaz&quot;
+&quot;${rules[@]}&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                handler &quot;Applying fonts&quot; &quot;sudo mv
+${CURRENT_PATH}/extracted_fonts/usr/share/fonts/truetype/deepin/*.ttf
+/usr/share/fonts/truetype/open-source/ &amp;&amp; sudo mv
+/usr/share/fonts/truetype/crosextra/*.ttf /usr/share/fonts/truetype/open-source/&quot;
+&quot;Apply fonts failed&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                cd &quot;${CURRENT_PATH}&quot; &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf ./extracted_fonts &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo rm -rf /usr/share/fonts/truetype/crosextra
+&gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo apt reinstall fonts-crosextra-carlito -y
+&gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo apt reinstall fonts-crosextra-caladea -y
+&gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo apt purge fonts-crosextra-carlito -y &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo apt purge fonts-crosextra-caladea -y &gt;/dev/null
+2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo apt autoremove -y &gt;/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler &quot;Reseting fonts cache&quot; &quot;sudo fc-cache -fvs
+&gt;/dev/null 2&gt;&amp;1&quot; &quot;Failed to reset cache&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'># read -p &quot;Do you want to install fcitx5 and Unikey(y/n):&quot;
+OPTION</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'># while [[ ! &quot;${OPTION}&quot; == &quot;y&quot; &amp;&amp; !
+&quot;${OPTION}&quot; == &quot;n&quot; ]];do</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>#             read -p &quot;Invalid option,retry:&quot; OPTION</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'># done</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'># if [[ &quot;${OPTION}&quot; == &quot;y&quot; ]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>#             handler &quot;Installing fcitx5 and Unikey&quot;
+&quot;im-config -n fcitx5 &amp;&amp; echo -e \&quot;\nexport
+GTK_IM_MODULE=fcitx\nexport QT_IM_MODULE=fcitx\nexport
+XMODIFIERS=@im=fcitx\&quot; &gt;&gt; ~/.profile&quot; &quot;Applying fcitx5 and
+Unikey failed&quot;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'># fi</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>read -p &quot;Completed,reboot now? y/n:&quot; REBOOT</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>if [[ &quot;${REBOOT}&quot; == &quot;y&quot; ]];then</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>                sudo reboot</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>fi</span></p>
+
+</div>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<span style='font-size:14.0pt;font-family:Roboto'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal><span style='font-size:18.0pt;font-family:Roboto'>H</span><span
+lang=VI style='font-size:18.0pt;font-family:Roboto'>ướng dẫn sử dụng</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>save
+code above into wps-fix.sh</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>Run
+</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>chmod </span><span
+style='font-size:11.0pt;font-family:Roboto'>777</span><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'> wps-fix.sh </span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>./wps-fix.sh</span></p>
+
+</div>
+
+<div style='border:none;border-bottom:double windowtext 1.5pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:14.0pt;font-family:Roboto'>Lưu ý, code này không sửa được hết bug
+,còn 1 bug cần được sửa thủ công,đó là bug không chạy được video nhúng trên
+slide pptx.</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:14.0pt;
+font-family:Roboto'><img border=0 width=553 height=311
+src="baocao_files/image001.gif"></span></p>
+
+</div>
+
+<b><span style='font-size:18.0pt;font-family:Roboto'><br clear=all
+style='page-break-before:always'>
+</span></b>
+
+<p class=MsoNormal><b><span style='font-size:18.0pt;font-family:Roboto'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:18.0pt;font-family:Roboto'>Danh s</span></b><b><span
+lang=VI style='font-size:18.0pt;font-family:Roboto'>ách bug và cách sửa lỗi</span></b></p>
+
+<p class=MsoNormal style='margin-left:0in;text-indent:0in'><span lang=VI
+style='font-size:14.0pt;font-family:Roboto'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span></span><span lang=VI style='font-size:14.0pt;font-family:Roboto'>Bug ko
+chạy được video nhúng trong pptx</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'><img
+border=0 width=554 height=355 id="Picture 1" src="baocao_files/image002.gif"
+alt="Peek 2026-07-13 04-41"></span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>Cách
+sửa</span><span style='font-size:14.0pt;font-family:Roboto'>:</span></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:Roboto'><img
+border=0 width=553 height=345 id="Picture 2" src="baocao_files/image003.gif"
+alt="Peek 2026-07-13 04-46"></span></p>
+
+<span style='font-size:14.0pt;font-family:Roboto'><br clear=all
+style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal><span style='font-size:14.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>2.</span><span
+style='font-size:14.0pt;font-family:Roboto'>Bug fonts rendering</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Nguyên
+nhân: do wps sử dụng thư viện freetype mới nhất nên bị lỗi khi rendering 1 số
+fonts.Lỗi này xảy ra khi có font chữ không có được thiết kế font Bold ,và wps
+phải fake bold .Những font chữ có thiết kế font Bold sẽ không</span><span
+lang=VI style='font-size:12.0pt;font-family:Roboto'> </span><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>bị.</span><span lang=VI
+style='font-size:14.0pt;font-family:Roboto'><img border=0 width=553 height=345
+id="Picture 3" src="baocao_files/image004.gif" alt="Peek 2026-07-13 05-22"></span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>Cách
+sửa :</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Downgrade
+thư viện freetype xuống phiên bản 2.13.0 </span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Package
+cần thiết </span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo apt install meson ninja-build
+build-essential</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Tải
+thư viện freetype và giải nén </span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo wget -q -O
+freetype-2.13.0.tar.xz </span><a
+href="https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz"><span
+lang=VI style='font-size:11.0pt;font-family:Roboto'>https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz</span></a></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo tar xf freetype-2.13.0.tar.xz</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>compile
+thư viện </span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>cd freetype-2.13.0</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>meson setup build &amp;&amp; meson
+compile -C build </span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>thay
+thế file thư viện đó qua trong file system của wps </span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo cp -a build/libfreetype.so*
+/opt/kingsoft/wps-office/office6/</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<b><span lang=VI style='font-size:12.0pt;font-family:Roboto'><br clear=all
+style='page-break-before:always'>
+</span></b>
+
+<p class=MsoNormal><b><span lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Các
+fonts chữ bị thiếu </span></b></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Fonts
+bản quyền:                                         Font open source thay thế:</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>Symbol                                   -&gt;                                 Deepin
+Open Symbol 6 </span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>Wingdings                             </span><span
+style='font-size:12.0pt;font-family:Roboto'>-&gt;</span><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>                                 Deepin
+Open Symbol</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>Wingdings 2                          -&gt;                                 Deepin
+Open Symbol 2</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>Wingding 3                            -&gt;                                 Deepin
+Open Symbol 3</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>MT Extra                                -&gt;                                 Deepin
+Open SYmbol 5</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>Calibri</span><span lang=VI style='font-size:12.0pt;
+font-family:Roboto'>                         </span><span style='font-size:
+12.0pt;font-family:Roboto'>            </span><span lang=VI style='font-size:
+12.0pt;font-family:Roboto'>-&gt;                                 Carlito</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:12.0pt;font-family:Roboto'>Cambria                                 -&gt;                                 Caladea</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Fonts
+open source dùng chung cả 2 trường hợp:</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+padding:0in'><span style='font-size:12.0pt;font-family:Roboto'>Roboto</span></p>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+padding:0in'><span style='font-size:12.0pt;font-family:Roboto'>Open sans</span></p>
+
+</div>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=VI style='font-size:12.0pt;font-family:Roboto'>Ưu điểm và nhược điểm:</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=189 valign=top style='width:142.0pt;border:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
+  </td>
+  <td width=189 valign=top style='width:142.0pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto;color:blue;background:
+  yellow'>Ưu điểm</span></p>
+  </td>
+  <td width=189 valign=top style='width:142.0pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto;color:blue;background:
+  yellow'>Nhược điểm </span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=189 valign=top style='width:142.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto;background:yellow'>Font bản
+  quyền</span></p>
+  </td>
+  <td width=189 valign=top style='width:142.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto'>Mọi font chữ và kích thước
+  đều giống như phiên bản của office</span></p>
+  </td>
+  <td width=189 valign=top style='width:142.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto'>Vi phạm bản quyền trừ khi
+  laptop đó có bản quyền window</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=189 valign=top style='width:142.0pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  lang=VI style='font-size:12.0pt;font-family:Roboto;background:yellow'>Font </span><span
+  style='font-size:12.0pt;font-family:Roboto;background:yellow'>open source</span></p>
+  </td>
+  <td width=189 valign=top style='width:142.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  style='font-size:12.0pt;font-family:Roboto'>Open source </span></p>
+  </td>
+  <td width=189 valign=top style='width:142.0pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0in 5.4pt 0in 5.4pt'>
+  <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+  style='font-size:12.0pt;font-family:Roboto'>Fonts </span><span lang=VI
+  style='font-size:12.0pt;font-family:Roboto'>chữ và kích thước giống tới 90%
+  .1 số font và ký tự có thể sẽ bị khác với phiên bản office .Cambria Math
+  không có giải pháp open source .Nên 1 số ký tự toán của cambria math sẽ không
+  hiển thị đúng .</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+style='font-size:18.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<h3><span style='font-size:16.0pt;font-family:Roboto'>1. Cách cài đặt Fonts chữ
+bản quyền (Microsoft Fonts)</span></h3>
+
+<p><span style='font-family:Roboto'>Cách này tải trực tiếp các font mặc định của
+Windows và copy vào hệ thống Linux.</span></p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;font-family:Roboto'>Bash</span></p>
+
+<pre><span style='font-family:Roboto'># Tải font từ thư viện mã nguồn mở</span></pre>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>git </span></code><span style='font-size:11.0pt;font-family:Roboto'>clone<code><span
+style='font-family:Roboto'> https://github.com/udoyen/wps-fonts.git</span></code></span></pre><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>git </span></code><span style='font-size:11.0pt;font-family:Roboto'>clone<code><span
+style='font-family:Roboto'> https://github.com/taveevut/Windows-10-Fonts-Default.git</span></code></span></pre></div>
+
+<pre><span style='font-family:Roboto'># Xử lý trùng lặp và đổi tên file đúng định dạng</span></pre>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>rm -f ./wps-fonts/wps/WEBDINGS.TTF</span></code></pre><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>mv ./wps-fonts/wps/WINGDNG3.ttf ./wps-fonts/wps/wingding3.ttf</span></code></pre><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>mv ./wps-fonts/wps/WINGDNG2.ttf ./wps-fonts/wps/wingding2.ttf</span></code></pre></div>
+
+<pre><span style='font-family:Roboto'># Tạo thư mục chứa font(symbol,wingding ,wingding2 ,wingding 3 ,mt extra) và di chuyển file vào hệ thống</span></pre>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>sudo mkdir -p /usr/share/fonts/truetype/microsoft</span></code></pre><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>sudo mv ./wps-fonts/wps/* /usr/share/fonts/truetype/microsoft/</span></code></pre></div>
+
+<pre><span style='font-family:Roboto'># Di chuyển các font phổ biến (Calibri, Cambria)</span></pre>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>sudo mv ./Windows-10-Fonts-Default/calibri*.ttf /usr/share/fonts/truetype/microsoft/</span></code></pre><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>sudo mv ./Windows-10-Fonts-Default/cambria*.ttf /usr/share/fonts/truetype/microsoft/</span></code></pre><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>sudo mv ./Windows-10-Fonts-Default/cambria.ttc /usr/share/fonts/truetype/microsoft/</span></code></pre></div>
+
+<pre><span style='font-family:Roboto'># Cập nhật lại cache font của hệ thống</span></pre>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'><pre
+style='border:none;padding:0in'><code><span style='font-size:11.0pt;font-family:
+Roboto'>sudo fc-cache -fvs</span></code></pre></div>
+
+<h3><span style='font-size:16.0pt;font-family:Roboto'>2.Cách cài font Open
+Source thay thế bản quyền</span></h3>
+
+<h4><span style='font-family:Roboto'>Bước 1: Khởi tạo môi trường và tải các
+công cụ hỗ trợ</span></h4>
+
+<p><span style='font-family:Roboto'>Hệ thống cần cài đặt </span><code><span
+style='font-size:10.0pt;font-family:Roboto'>fonttools</span></code><span
+style='font-family:Roboto'> để xử lý biên dịch ngược font và các gói font mã
+nguồn mở thay thế từ kho ứng dụng chính thức.</span></p>
+
+<p><span style='font-family:Roboto'>Bash</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'># Tạo thư mục lưu trữ font open-source trên hệ thống</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'>sudo mkdir -p /usr/share/fonts/truetype/open-source</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'># Cài đặt công cụ biên dịch font và các font thay thế
+(Carlito, Caladea)</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'>sudo apt install fonttools fonts-crosextra-carlito
+fonts-crosextra-caladea -y</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'># Tải gói font ký tự độc quyền từ Deepin và giải nén thủ
+công</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'>sudo wget -q -O ttf-deepin-opensymbol_2.2_all.deb
+https://tux.rainside.sk/deepin/apricot/pool/non-free/t/ttf-deepin-opensymbol/ttf-deepin-opensymbol_2.2_all.deb</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'>sudo dpkg-deb -x ttf-deepin-opensymbol_2.2_all.deb
+extracted_fonts</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'># Xóa file cài đặt .deb sau khi đã giải nén xong</span></code></p>
+
+<p style='border:none;padding:0in'><code><span style='font-size:11.0pt;
+font-family:Roboto'>sudo rm -f ./ttf-deepin-opensymbol_2.2_all.deb</span></code></p>
+
+</div>
+
+<h4><span style='font-family:Roboto'>Bước 2: Dịch ngược và giả mạo Metadata cho
+các Font ký tự </span></h4>
+
+<p><span style='font-family:Roboto'>Chuyển đổi toàn bộ 5 font ký tự từ thư mục
+giải nén của Deepin sang định dạng cấu trúc XML (</span><code><span
+style='font-size:10.0pt;font-family:Roboto'>.ttx</span></code><span
+style='font-family:Roboto'>), thay đổi tên định danh bên trong cấu trúc file để
+đánh lừa ứng dụng, sau đó đóng gói lại về định dạng </span><code><span
+style='font-size:10.0pt;font-family:Roboto'>.ttf</span></code><span
+style='font-family:Roboto'>.</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>cd extracted_fonts/usr/share/fonts/truetype/deepin/</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># 1. Chuyển đổi toàn bộ định dạng TTF sang TTX (XML)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;wingding.ttx&quot; DeepinOpenSymbol.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;wingding2.ttx&quot; DeepinOpenSymbol2.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;wingding3.ttx&quot; DeepinOpenSymbol3.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;mtextra.ttx&quot; DeepinOpenSymbol5.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;symbol.ttx&quot; DeepinOpenSymbol6.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xóa các file TTF gốc chưa chỉnh sửa</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo rm -rf ./*.ttf</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># 2. Tiến hành thay đổi tên định danh font (Font Forging)
+và đóng gói lại</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xử lý Wingdings</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Deepin OpenSymbol Regular/Wingdings/g;
+s/DeepinOpenSymbolRegular/Wingdings/g&quot; wingding.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o wingding.ttf wingding.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xử lý Wingdings 2</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Deepin OpenSymbol 2/Wingdings 2/g;
+s/DeepinOpenSymbol2Regular/Wingdings2/g&quot; wingding2.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o wingding2.ttf wingding2.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xử lý Wingdings 3</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Deepin OpenSymbol 3/Wingdings 3/g;
+s/DeepinOpenSymbol3Regular/Wingdings3/g&quot; wingding3.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o wingding3.ttf wingding3.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xử lý MT Extra</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Deepin OpenSymbol 5 Regular/MT Extra/g;
+s/DeepinOpenSymbolRegular5/MTExtra/g&quot; mtextra.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o mtextra.ttf mtextra.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xử lý Symbol</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Deepin OpenSymbol 6 Regular/Symbol/g;
+s/DeepinOpenSymbolRegular6/Symbol/g&quot; symbol.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o symbol.ttf symbol.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Di chuyển các font ký tự đã mod thành công vào thư mục
+open-source</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo mv ./*.ttf /usr/share/fonts/truetype/open-source/</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Bước
+3: Dịch ngược và đổi tên các Font văn bản chính (Carlito -&gt; Calibri, Caladea
+-&gt; Cambria)</span></b></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Chuyển
+đổi toàn bộ các biến thể (Regular, Bold, Italic, BoldItalic) của font văn bản
+chuẩn trong hệ thống để thực hiện tráo đổi định danh cấu trúc.</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>cd /usr/share/fonts/truetype/crosextra/</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># 1. Chuyển đổi toàn bộ định dạng TTF sang TTX (XML)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;calibri.ttx&quot; Carlito-Regular.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;calibrib.ttx&quot; Carlito-Bold.ttf &gt;
+/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;calibrii.ttx&quot; Carlito-Italic.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;calibriz.ttx&quot; Carlito-BoldItalic.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;cambria.ttx&quot; Caladea-Regular.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;cambriab.ttx&quot; Caladea-Bold.ttf &gt;
+/dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;cambriai.ttx&quot; Caladea-Italic.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o &quot;cambriaz.ttx&quot; Caladea-BoldItalic.ttf
+&gt; /dev/null 2&gt;&amp;1</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># Xóa các file TTF nguyên bản trong thư mục hiện hành</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo rm -rf ./*.ttf</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># 2. Xử lý sửa metadata và biên dịch lại cho nhóm font
+Calibri (Carlito)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Carlito Regular/Calibri/g;
+s/Carlito-Regular/Calibri/g; s/Carlito/Calibri/g&quot; calibri.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o calibri.ttf calibri.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Carlito Bold/Calibri Bold/g;
+s/Carlito-Bold/Calibri-Bold/g; s/Carlito/Calibri/g&quot; calibrib.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o calibrib.ttf calibrib.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Carlito Italic/Calibri Italic/g;
+s/Carlito-Italic/Calibri-Italic/g; s/Carlito/Calibri/g&quot; calibrii.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o calibrii.ttf calibrii.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Carlito Bold Italic/Calibri Bold
+Italic/g; s/Carlito-BoldItalic/Calibri-BoldItalic/g; s/Carlito/Calibri/g&quot;
+calibriz.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o calibriz.ttf calibriz.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># 3. Xử lý sửa metadata và biên dịch lại cho nhóm font
+Cambria (Caladea)</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Caladea Regular/Cambria/g;
+s/Caladea-Regular/Cambria/g; s/Caladea/Cambria/g&quot; cambria.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o cambria.ttf cambria.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Caladea Bold/Cambria Bold/g;
+s/Caladea-Bold/Cambria-Bold/g; s/Caladea/Cambria/g&quot; cambriab.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o cambriab.ttf cambriab.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Caladea Italic/Cambria Italic/g;
+s/Caladea-Italic/Cambria-Italic/g; s/Caladea/Cambria/g&quot; cambriai.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o cambriai.ttf cambriai.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo sed -i &quot;s/Caladea Bold Italic/Cambria Bold
+Italic/g; s/Caladea-BoldItalic/Cambria-BoldItalic/g; s/Caladea/Cambria/g&quot;
+cambriaz.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo ttx -o cambriaz.ttf cambriaz.ttx</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'># 4. Di chuyển toàn bộ font văn bản đã xử lý sang thư mục mục
+tiêu</span></p>
+
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-size:12.0pt;
+font-family:Roboto'>sudo mv /usr/share/fonts/truetype/crosextra/*.ttf /usr/share/fonts/truetype/open-source/</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span style='font-size:16.0pt;font-family:Roboto'>3.</span></b><b><span
+lang=VI style='font-size:16.0pt;font-family:Roboto'>cài đặt fonts open source
+dùng chung cho cả 2 trường hợp </span></b></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Có
+4 fonts nổi tiếng open source nhưng Ubuntu không tự cài sẵn,nên mình phải cài
+,cho dù là trường hợp bản quyền hay open source thế bản quyền.</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Install
+Roboto fonts</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo apt install fonts-roboto</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Install
+Open Sans</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo apt install fonts-open-sans</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Install
+Dejavu And Liberation2</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI
+style='font-size:11.0pt;font-family:Roboto'>sudo apt install fonts-dejavu
+fonts-liberation2</span></p>
+
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=VI style='font-size:16.0pt;font-family:Roboto'>Sự
+khác nhau giữa bản quyền và open source </span></b></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Open
+source hầu như chạy chính xác 90% so với fonts bản quyền.<br>
+Một số ký tự hoặc ký hiệu sẽ có hình dạng khác 1 chút ,nhưng vẫn cùng 1 ý nghĩa
+,cùng kích thước.</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Chỉ
+có Fonts Cambria Math không có phiên bản open source thay thế </span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'> Font
+Symbol</span><span style='font-size:12.0pt;font-family:Roboto'>:</span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=554 height=209 id="Picture 5"
+src="baocao_files/image005.png"></span></p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;font-family:Roboto'>Font
+Wingdings</span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=554 height=225 id="Picture 6"
+src="baocao_files/image006.png"></span></p>
+
+<span style='font-size:10.0pt;font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><br clear=all style='page-break-before:always'>
+</span>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;font-family:Roboto'> Font
+Wingdings 2</span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=553 height=221 id="Picture 7"
+src="baocao_files/image007.png"></span></p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;font-family:Roboto'>Font
+Wingdings 3</span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=553 height=184 id="Picture 11"
+src="baocao_files/image008.png"></span></p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;font-family:Roboto'>MT Extra</span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=553 height=186 id="Picture 8"
+src="baocao_files/image009.png"></span><span style='font-family:Roboto;
+border:solid windowtext 1.0pt;padding:0in'><br clear=all style='page-break-before:
+always'>
+</span><span style='font-size:12.0pt;font-family:Roboto'>Calibri </span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=553 height=139 id="Picture 9"
+src="baocao_files/image010.png"></span><span style='font-size:12.0pt;
+font-family:Roboto'>Cambria</span></p>
+
+<p class=MsoNormal><span style='font-family:Roboto;border:solid windowtext 1.0pt;
+padding:0in'><img border=0 width=553 height=140 id="Picture 10"
+src="baocao_files/image011.png"></span></p>
+
+</div>
+
+</body>
+
+</html>
