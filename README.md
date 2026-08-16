@@ -232,6 +232,8 @@ cd "${CURRENT\_PATH}" >/dev/null 2>&1
 
 sudo rm -rf ./freetype-2.13.0 >/dev/null 2>&1
 
+handler "Fixing export bug (libtiff.so.5 missing)" "sudo ln -s /usr/lib/x86\_64-linux-gnu/libtiff.so.6 /usr/lib/x86\_64-linux-gnu/libtiff.so.5" "Failed to link libtiff"
+
 echo "Installing missing fonts"
 
 handler "Install Roboto fonts" "sudo apt install fonts-roboto -y" "Pls recheck your network connection"
@@ -488,6 +490,16 @@ meson setup build && meson compile -C build
 thay thế file thư viện đó qua trong file system của wps
 
 sudo cp -a build/libfreetype.so\* /opt/kingsoft/wps-office/office6/
+
+3\. Bug không export được ra PDF / hình ảnh (Thiếu thư viện libtiff)
+
+Nguyên nhân: Trên Ubuntu 24.04 đã được nâng cấp lên thư viện libtiff.so.6 mới hơn, nhưng WPS Office vẫn tìm kiếm phiên bản cũ là libtiff.so.5 để thực hiện tính năng export.
+
+Cách sửa:
+
+Tạo một symlink (liên kết mềm) từ phiên bản 6 sang phiên bản 5 để đánh lừa WPS:
+
+sudo ln -s /usr/lib/x86\_64-linux-gnu/libtiff.so.6 /usr/lib/x86\_64-linux-gnu/libtiff.so.5
 
 **Các fonts chữ bị thiếu**
 

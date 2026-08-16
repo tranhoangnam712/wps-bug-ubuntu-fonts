@@ -476,7 +476,8 @@ Roboto'>cd &quot;${CURRENT_PATH}&quot; &gt;/dev/null 2&gt;&amp;1</span></p>
 
 <p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
 Roboto'>sudo rm -rf ./freetype-2.13.0 &gt;/dev/null 2&gt;&amp;1</span></p>
-
+<p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
+Roboto'>handler "Fixing export bug (libtiff.so.5 missing)" "sudo ln -s /usr/lib/x86_64-linux-gnu/libtiff.so.6 /usr/lib/x86_64-linux-gnu/libtiff.so.5" "Failed to link libtiff"</span></p>
 <p class=MsoNormal style='border:none;padding:0in'><span style='font-family:
 Roboto'>echo &quot;Installing missing fonts&quot;</span></p>
 
@@ -1034,7 +1035,19 @@ thế file thư viện đó qua trong file system của wps </span></p>
 <p class=MsoNormal style='border:none;padding:0in'><span lang=VI
 style='font-size:11.0pt;font-family:Roboto'>sudo cp -a build/libfreetype.so*
 /opt/kingsoft/wps-office/office6/</span></p>
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>3. Bug không export được ra PDF / hình ảnh (Thiếu thư viện libtiff)</span></p>
 
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Nguyên nhân: Trên Ubuntu 24.04 đã được nâng cấp lên thư viện libtiff.so.6 mới hơn, nhưng WPS Office vẫn tìm kiếm phiên bản cũ là libtiff.so.5 để thực hiện tính năng export.</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:14.0pt;font-family:Roboto'>Cách sửa:</span></p>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>Tạo một symlink (liên kết mềm) từ phiên bản 6 sang phiên bản 5 để đánh lừa WPS:</span></p>
+
+<div style='border:solid windowtext 1.0pt;padding:0in 0in 0in 0in'>
+<p class=MsoNormal style='border:none;padding:0in'><span lang=VI style='font-size:11.0pt;font-family:Roboto'>sudo ln -s /usr/lib/x86_64-linux-gnu/libtiff.so.6 /usr/lib/x86_64-linux-gnu/libtiff.so.5</span></p>
+</div>
+
+<p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
 </div>
 
 <p class=MsoNormal><span lang=VI style='font-size:12.0pt;font-family:Roboto'>&nbsp;</span></p>
