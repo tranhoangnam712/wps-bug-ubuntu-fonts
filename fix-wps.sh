@@ -109,6 +109,7 @@ echo "Fixing WPS bug"
 cd freetype-2.13.0 >/dev/null 2>&1
 handler "Compiling old version freetype" "meson setup build >/dev/null 2>&1 && meson compile -C build >/dev/null 2>&1" "Failed to compile freetype"
 handler "Applying freetype to WPS" "sudo cp -a build/libfreetype.so* /opt/kingsoft/wps-office/office6/" "Applying failed"
+handler "Fix export to pdf" "sudo ln -s /usr/lib/x86_64-linux-gnu/libtiff.so.6 /usr/lib/x86_64-linux-gnu/libtiff.so.5" "Applying failed"
 cd "${CURRENT_PATH}" >/dev/null 2>&1
 sudo rm -rf ./freetype-2.13.0 >/dev/null 2>&1
 echo "Installing missing fonts"
