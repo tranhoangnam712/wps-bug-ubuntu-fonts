@@ -25,7 +25,7 @@ handler(){
         EXEC_CMD="$CMD >/dev/null 2>&1"
         echo -n "${MSG}..."
     else
-        echo "${MSG}..." # Prints normally with a newline so apt gets its own space
+        echo "${MSG}..."
     fi
     while ! eval "$EXEC_CMD"; do
         ((RETRY_ATTEMP--))
@@ -48,7 +48,7 @@ CURRENT_PATH=$(pwd)
 handler "Running apt update" "sudo apt update" "Pls recheck your network connection"
 handler "Downloading package" "sudo apt install curl wget git meson ninja-build build-essential fcitx5 fcitx5-unikey fcitx5-frontend-qt5 fcitx5-frontend-gtk3 jq -y" "Pls recheck your network connection"
 handler "Downloading freetype2.13.0 source code" "sudo wget -q -O freetype-2.13.0.tar.xz https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz" "Cant access to https://sourceforge.net/projects/freetype/files/freetype2/2.13.0/freetype-2.13.0.tar.xz .Pls recheck your network connection"
-sudo tar xf freetype-2.13.0.tar.xz --remove-files >/dev/null 2>&1
+sudo tar xf freetype-2.13.0.tar.xz >/dev/null 2>&1 && sudo rm -f ./freetype-2.13.0.tar.xz
 handler "Extracting latest verion number..." "sudo curl -Ls https://params.wps.com/api/map/web/newwpsapk?pttoken=newlinuxpackages" "Pls recheck your network connection"
 URL_DOWNLOAD=$(sudo curl -Ls https://params.wps.com/api/map/web/newwpsapk?pttoken=newlinuxpackages | jq -r ".staticjs.website.wpsnewpackages.downloads" | base64 -d | jq -r ".linux_deb")
 LATEST_VERSION="$(echo ${URL_DOWNLOAD}| grep -oE "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")"
@@ -65,7 +65,7 @@ if dpkg -s "wps-office" >/dev/null 2>&1 ;then
 fi
 if [[ "${OPTION}" -eq 0 ]];then
 	echo "Finding local wps deb..."
-	PATH_DEB=$(find ./ ~/Downloads ~/Desktop -maxdepth 1 -name "wps-office*.deb" 2>/dev/null)
+	PATH_DEB=$(find ~/ -name "*.deb" 2>/dev/null)
 	readarray -t ITEMS <<<"$PATH_DEB"
 	NEW=()
 	for item in "${ITEMS[@]}"; do
@@ -109,9 +109,22 @@ echo "Fixing WPS bug"
 cd freetype-2.13.0 >/dev/null 2>&1
 handler "Compiling old version freetype" "meson setup build >/dev/null 2>&1 && meson compile -C build >/dev/null 2>&1" "Failed to compile freetype"
 handler "Applying freetype to WPS" "sudo cp -a build/libfreetype.so* /opt/kingsoft/wps-office/office6/" "Applying failed"
+if [ -L /usr/lib/x86_64-linux-gnu/libtiff.so.5 ]; then 
+	sudo rm /usr/lib/x86_64-linux-gnu/libtiff.so.5
+fi
 handler "Fix export to pdf" "sudo ln -s /usr/lib/x86_64-linux-gnu/libtiff.so.6 /usr/lib/x86_64-linux-gnu/libtiff.so.5" "Applying failed"
+if ! grep -q "EnableGraphicsCardAcceleration" ~/.config/Kingsoft/Office.conf; then
+	echo "wpp\Application%20Settings\EnableGraphicsCardAcceleration=1" >> ~/.config/Kingsoft/Office.conf
+else
+	sed -i "s/EnableGraphicsCardAcceleration=./EnableGraphicsCardAcceleration=1/g" ~/.config/Kingsoft/Office.conf
+fi
+handler "Fix cant play video" "wpp & sleep 3 ; killall -9 wpp ; sleep 1 ; sed -i 's/EnableGraphicsCardAcceleration=./EnableGraphicsCardAcceleration=0/g' ~/.config/Kingsoft/Office.conf" "Fix failed"
 cd "${CURRENT_PATH}" >/dev/null 2>&1
 sudo rm -rf ./freetype-2.13.0 >/dev/null 2>&1
+sudo killall -9 wps >/dev/null 2>&1
+sudo killall -9 wpp >/dev/null 2>&1
+sudo killall -9 et >/dev/null 2>&1
+sudo killall -9 wpspdf >/dev/null 2>&1
 echo "Installing missing fonts"
 handler "Install Roboto fonts" "sudo apt install fonts-roboto -y" "Pls recheck your network connection"
 handler "Install Open Sans" "sudo apt install fonts-open-sans -y" "Pls recheck your network connection"
@@ -202,15 +215,6 @@ else
 	sudo apt autoremove -y >/dev/null 2>&1
 fi
 handler "Reseting fonts cache" "sudo fc-cache -fvs >/dev/null 2>&1" "Failed to reset cache"
-
-# read -p "Do you want to install fcitx5 and Unikey(y/n):" OPTION
-# while [[ ! "${OPTION}" == "y" && ! "${OPTION}" == "n" ]];do
-# 	read -p "Invalid option,retry:" OPTION
-# done
-# if [[ "${OPTION}" == "y" ]];then
-#	handler "Installing fcitx5 and Unikey" "im-config -n fcitx5 && echo -e \"\nexport GTK_IM_MODULE=fcitx\nexport QT_IM_MODULE=fcitx\nexport XMODIFIERS=@im=fcitx\" >> ~/.profile" "Applying fcitx5 and Unikey failed"
-# fi
-
 read -p "Completed,reboot now? y/n:" REBOOT
 if [[ "${REBOOT}" == "y" ]];then
 	sudo reboot
